@@ -1,6 +1,8 @@
+import * as types from '../actions/actionTypes';
+
 export default function courseReducer(state = [], action) { // default to array ES6
     switch (action.type) {
-      case 'CREATE_COURSE':
+      case types.CREATE_COURSE:
         /** bad practice - don't change state */
         // state.push(action.course);
         // return state;
