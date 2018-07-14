@@ -47,3 +47,28 @@ Review - Parts of Container Components
   1. mapStateToProps
   2. mapDispatchToProps
   3. export default connect(mapStateToProps, mapDispatchToProps)(ComponentName);
+
+
+
+// Mock APIs
+Options
+1. redux-thunks
+  1. Easier to learn
+  2. return functions
+2. redux-sagas
+  1. harder to learn 
+  2. use ES6 generators - can yield at points in API return
+
+This project uses redux-thunks.
+Example of redux-thunk:
+```js
+  export function deleteAuthor(authorId) {
+    return dispatch => {
+      return AuthorApi.deleteAuthor(authorId).then(() =. {
+        /* calling inline action */
+        dispatch(deletedAuthor(authorId));
+      }).catch(handleError);
+    }
+  }
+```
+

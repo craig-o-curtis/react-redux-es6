@@ -3,63 +3,74 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as courseActions from '../../actions/courseActions';
+import CourseList from './CourseList';
 
 class CoursesPage extends React.Component {
   constructor( props, context ) {
     super( props, context );
 
-    this.state = {
-      course : { title : '' }
-    };
+    /** moved to manage courses page */
+    // this.state = {
+    //   course : { title : '' }
+    // };
 
     /*** DO BINDS IN CONSTRUCOR  */
       // need to bind to this keyword in ES6
-    this.onTitleChange = this.onTitleChange.bind(this);
-    this.onClickSave = this.onClickSave.bind(this);
+    /** moved to manage courses page */
+    // this.onTitleChange = this.onTitleChange.bind(this);
+    // this.onClickSave = this.onClickSave.bind(this);
       /** Note - could bind in JSX - onClick={this.onClickSave.bind(this)}
        * but has negative impact on performance - causes new function to be created
        * on each render
        */
   }
 
-  /** */
-  onTitleChange(event) {
-    const course = this.state.course;
-    course.title = event.target.value;
-    this.setState({course : course});
-  }
-  /** */
-  onClickSave() {
-    // alert(`Saving ${this.state.course.title}`);
-    // this.props.dispatch is from not adding second arg mapDispatchToProps to connect() at bottom in export statement
-    /* MOST VERBOSE WAY: */
-    // this.props.dispatch( courseActions.createCourse( this.state.course ) );
-    // debugger;
-    /* REDUX FLOW STEP 1 */
-    /* Concise way using mapDispatchToProps */
+  /** Moved to Manage Courses Page */
+  // onTitleChange(event) {
+  //   const course = this.state.course;
+  //   course.title = event.target.value;
+  //   this.setState({course : course});
+  // }
+  /** Moved to Manage Courses Page */
+  // onClickSave() {
+  //   // alert(`Saving ${this.state.course.title}`);
+  //   // this.props.dispatch is from not adding second arg mapDispatchToProps to connect() at bottom in export statement
+  //   /* MOST VERBOSE WAY: */
+  //   // this.props.dispatch( courseActions.createCourse( this.state.course ) );
+  //   // debugger;
+  //   /* REDUX FLOW STEP 1 */
+  //   /* Concise way using mapDispatchToProps */
 
-    /* METHOD 2/3 */
-    // this.props.createCourse( this.state.course );
+  //   /* METHOD 2/3 */
+  //   // this.props.createCourse( this.state.course );
 
-    /* METHOD 3/3 */
-    this.props.actions.createCourse( this.state.course );
-
-  }
+  //   /* METHOD 3/3 */
+  //   this.props.actions.createCourse( this.state.course );
+  // }
 
   /* Create a repeater */
-  createCourseRow(course, index) {
-    return (
-      <div key={index}>{course.title}</div>
-    );
-  }
+  // createCourseRow(course, index) {
+  //   return (
+  //     <div key={index}>{course.title}</div>
+  //   );
+  // }
 
   render() {
     // debugger; /* REDUX FLOW STEP 0,5 */
+    
+    // destructor props here at top of render
+    const { courses } = this.props;
+
     return (
       <div>
         <h1>Courses</h1>
+
+        {/* Use new component */}
+        <CourseList courses={courses} />
+
+
         {/* External function mapping */}
-        {this.props.courses.map( this.createCourseRow )}
+        {/* {this.props.courses.map( this.createCourseRow )} */}
 
         {/* Inline mapping */}
         {/* { this.props.courses.map( (course, index) => {
@@ -67,14 +78,15 @@ class CoursesPage extends React.Component {
           })
         } */}
 
-        <h2>Add Course</h2>
+        {/* add course refactored out into manage courses  */}
+        {/* <h2>Add Course</h2>
         <input type="text"
             onChange={this.onTitleChange}
             value={this.state.course.title} />
 
         <input type="submit"
             value="Save"
-            onClick={this.onClickSave} />
+            onClick={this.onClickSave} /> */}
       </div>
     );
   }
