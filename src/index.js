@@ -8,11 +8,13 @@ import routes from './routes';
 import './styles/styles.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // mock api
-import { loadCourses } from './actions/courseActions';
+import { loadCourses } from './actions/courseActions'; // mock api
+import { loadAuthors } from './actions/authorActions'; // mock api
 
 const store = configureStore(); // optional param of initialState, but this is handled in courseReducer default []
 // load up thunk mock api on load
 store.dispatch( loadCourses() );
+store.dispatch( loadAuthors() );
 
 // Provider allows access to store from React components
 render(
