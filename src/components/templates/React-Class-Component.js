@@ -9,6 +9,6 @@ class $NAME extends React.Component {
 
 $NAME.propTypes = {
   myProp : PropTypes.string.isRequired
-}
+};
 
 export default $NAME;

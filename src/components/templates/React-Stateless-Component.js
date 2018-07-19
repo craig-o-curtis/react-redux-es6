@@ -5,10 +5,10 @@ const $NAME = (props) => {
   return (
     <div></div>
   );
-}
+};
 
 $NAME.PropTypes = {
   myProp : PropTypes.string.isRequired
-}
+};
 
 export default $NAME;
