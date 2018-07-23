@@ -3,7 +3,7 @@ import initialState from './initialState';
 
 /**
  * Handles all following success calls:
- * @param {string} actionType 
+ * @param {string} actionType
  *  LOAD_COURSES_SUCCESS / ERROR
  *  UPDATE_COURSE_SUCCESS / ERROR
  *  CREATE_COURSE_SUCCESS / ERROR
@@ -18,7 +18,9 @@ export default function ajaxStatusReducer(state = initialState.ajaxCallsInProgre
   /* use conditional instead of switch for simple reducers for trick --> */
   if (action.type === types.BEGIN_AJAX_CALL) {
     return state + 1;
-  } else if (actionTypeEndsInSuccess(action.type)) {
+  } else if ( actionTypeEndsInSuccess(action.type ) ) {
+    return state - 1;
+  } else if ( action.type == types.AJAX_CALL_ERROR ) {
     return state - 1;
   }
 

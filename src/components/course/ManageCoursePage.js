@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
+import toastr from 'toastr';
 
 class ManageCoursePage extends React.Component {
   constructor(props, context) {
@@ -12,12 +13,14 @@ class ManageCoursePage extends React.Component {
     // Set up local state
     this.state = {
       course : Object.assign({}, props.course),
-      errors : {}
+      errors : {},
+      saving : false
     };
 
     // bind method to this context
     this.updateCourseState = this.updateCourseState.bind(this);
     this.saveCourse = this.saveCourse.bind(this);
+    this.redirect = this.redirect.bind(this);
   }
 
   // handle ajax data, set to state
@@ -41,8 +44,22 @@ class ManageCoursePage extends React.Component {
 
   saveCourse(event) {
     event.preventDefault();
-    this.props.actions.saveCourse(this.state.course);
+    this.setState({saving: true});
+    // below thunk returns a promise
+    this.props.actions.saveCourse(this.state.course)
+      .then(() => {
+        this.redirect();
+      }).catch( (error) => {
+        // could use an error dispatch, but toastr for simplicity
+        toastr.error(error);
+        this.setState({saving: false});
+        // this.setState({loading: false});
+      });
+  }
 
+  redirect() {
+    this.setState({saving: false});
+    toastr.success('Course saved!');
     // able to user context from declaration below in ManageCoursePage.contextTypes
     this.context.router.push('/courses');
   }
@@ -56,6 +73,7 @@ class ManageCoursePage extends React.Component {
           allAuthors={this.props.authors}
           course={this.state.course}
           errors={this.state.errors}
+          saving={this.state.saving}
           />
       </div>
     );
@@ -85,7 +103,7 @@ function mstp_getCourseById(courses, id) {
 
 function mapStateToProps(state, ownProps) {
   // get params from url, determine if adding new or updating existing
-  const courseId = ownProps.params.id; // from the path '/course/:id'
+  const courseId = ownProps.params.id; // from the path '/course/:id'  console.log(ownProps)
 
   // need to load empty course
   let course = {id: '', watchHref: '', title: '', authorId: '', length: '', category: ''};

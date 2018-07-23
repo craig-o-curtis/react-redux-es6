@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import courseApi from '../api/mockCourseApi';
-import { beginAjaxCall } from './ajaxStatusActions';
+import { beginAjaxCall, ajaxCallError } from './ajaxStatusActions';
 
 /* COURSES THUNK */
 // action creator
@@ -63,8 +63,9 @@ export function saveCourse(course) {
         course.id ? dispatch(updateCourseSuccess(savedCourse)) :
           dispatch(createCourseSuccess(savedCourse));
       }).catch(error => {
-        dispatch(updateCourseError(error));
-        throw(error);
+        dispatch(updateCourseError(error)); // not currently doing anything - see next
+        dispatch(ajaxCallError(error));
+        throw(error); /// need this otherwise will end in success
       });
   };
 }
