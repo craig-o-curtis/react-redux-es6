@@ -26,8 +26,9 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
+  const importedActions = {}; // for demo only
   return {
-    actions : bindActionCreators(actions, dispatch)
+    actions : bindActionCreators(importedActions, dispatch)
   };
 }
 

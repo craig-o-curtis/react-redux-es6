@@ -12,7 +12,7 @@ function setup(saving) {
     errors : {},
     onSave : () => {},
     onChange : () => {}
-  }
+  };
 
   let renderer = TestUtils.createRenderer();
   renderer.render(<CourseForm {...props} />);
@@ -22,7 +22,7 @@ function setup(saving) {
     props,
     output,
     renderer
-  }
+  };
 }
 /* test structure of component */
 describe('CourseForm via React Test Utils ', () => {
@@ -30,7 +30,7 @@ describe('CourseForm via React Test Utils ', () => {
     // call setup created above
     const { output } = setup();
     expect(output.type).toBe('form');
-    
+
     let [h1] = output.props.children;
     expect(h1.type).toBe('h1');
   });

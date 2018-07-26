@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
+import { authorsFormattedForDropdown } from '../../selectors/authorSelectors';
 import toastr from 'toastr';
 
-class ManageCoursePage extends React.Component {
+// export statement here for easier unit testing, import with curly braces in test - { ManageCoursePage }
+export class ManageCoursePage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -42,8 +44,27 @@ class ManageCoursePage extends React.Component {
     return this.setState({course : course});
   }
 
+  courseFormIsValid() {
+    let formIsValid = true;
+    let errors = {};
+
+    if (this.state.course.title.length < 5) {
+      errors.title = 'Title must be at least 5 characters.';
+      formIsValid = false;
+    }
+
+    this.setState( { errors : errors } );
+
+    return formIsValid;
+  }
+
   saveCourse(event) {
     event.preventDefault();
+    // validation function
+    if ( !this.courseFormIsValid() ) {
+      return;
+    }
+
     this.setState({saving: true});
     // below thunk returns a promise
     this.props.actions.saveCourse(this.state.course)
@@ -114,18 +135,20 @@ function mapStateToProps(state, ownProps) {
     course = mstp_getCourseById(state.courseReducer, courseId);
   }
 
-  // transform shape of data from authors mock api call
-  const authorsFormattedForDropdown = state.authorReducer.map(author => {
-    return {
-      value : author.id,
-      text : author.firstName + ' ' + author.lastName
-    };
-  });
+  // transform shape of data from authors mock api call -
+  // !!! Separated into ANOTHER folder - selectors -- this is too much separation -- should just be IN THIS FILE
+  // const authorsFormattedForDropdown = state.authorReducer.map(author => {
+  //   return {
+  //     value : author.id,
+  //     text : author.firstName + ' ' + author.lastName
+  //   };
+  // });
+
 
   // pass data to component here
   return {
     course : course,
-    authors : authorsFormattedForDropdown
+    authors : authorsFormattedForDropdown( state.authorReducer )
   };
 }
 

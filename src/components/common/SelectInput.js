@@ -7,6 +7,7 @@ const SelectInput = ({name, label, onChange, defaultOption, value, error, option
       <label htmlFor={name}>{label}</label>
       <div className="field">
         <select
+          disabled={options.length == 0}
           name={name}
           value={value}
           onChange={onChange}
