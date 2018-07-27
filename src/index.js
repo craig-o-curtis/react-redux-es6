@@ -1,3 +1,5 @@
+/*eslint-disable import/default*/
+// above is to disable not using default export in configureStore.js
 /**
  * This is the application's entry point
  */

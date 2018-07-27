@@ -19,7 +19,7 @@ describe('Store', () => {
     // call
     const action = courseActions.createCourseSuccess( testCourse );
     store.dispatch( action );
-    const result = store.getState().courseReducer[0]; 
+    const result = store.getState().courseReducer[0];
       // can also call courseReducer 'courses',
       // but maintaining this naming convention for clarity of what a reducer actually is
 
