@@ -33,7 +33,7 @@ export function updateCourseError(error) {
 }
 
 
-// thunks for async loading
+// thunks for async loading - tested in courseActions.thunks.test.js
 /* handle promise and dispatch action when Promise resolves */
 export function loadCourses() {
   return function(dispatch) {
